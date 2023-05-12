@@ -30,4 +30,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'cronitor' => [
+        'api_key' => env('YOUR_CRONITOR_KEY'),
+    ],
+
 ];

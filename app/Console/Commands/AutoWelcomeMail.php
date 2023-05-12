@@ -16,6 +16,7 @@ class AutoWelcomeMail extends Command
      */
     protected $signature = 'auto:welcomemail';
 
+
     /**
      * The console command description.
      *
@@ -40,6 +41,11 @@ class AutoWelcomeMail extends Command
      */
     public function handle()
     {
+        $cronitor = new Cronitor\Client(config('services.cronitor.api_key'));
+        
+        // Start the Cronitor monitor
+        $cronitor->run();
+
         $users = User::all();
 
         if ($users->count() > 0) {
@@ -47,6 +53,9 @@ class AutoWelcomeMail extends Command
                 Mail::to($user)->send(new WelcomeMail($user));
             }
         }
+
+        // Complete the Cronitor monitor
+        $cronitor->complete();
 
         return 0;
     }
